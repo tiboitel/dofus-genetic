@@ -1,0 +1,21 @@
+{
+    "name": "tiboitel/dofus-genetic",
+    "type": "library",
+    "description": "A genetic algorithm to generate a theorycraft set of equipment for the game Dofus Touch.",
+    "keywords": ["dofus", "touch", "genetic", "algorithm"],
+    "authors": [
+      {
+        "name": "Timothee Boitelle",
+        "email": "tiboitel@student.42.fr",
+      }
+    ],
+    "require": {
+        "php": "^5.4 || ^7.0",
+        "pdeans/http": "^1.1"
+    },
+    "autoload": {
+  		"psr-4": {
+  			"DofusGenetic\\": "srcs/"
+      }
+		}
+}
