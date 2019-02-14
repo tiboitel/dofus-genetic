@@ -60,5 +60,31 @@ class ItemHelper
 		}
 		return ($tmp);
 	}
+
+	static public function normalizeItem($equipment)
+	{
+		$equipment['PA'] *= 85;
+		$equipment['PM'] *= 75;
+		$equipment['PO'] *= 41;
+		$equipment['Sagesse'] *= 3;
+		$equipment ['Dommages'] *= 20;
+		$equipment['Prospection'] *= 3;
+		$equipment['Invocations'] *= 30;
+		$equipment['Puissance'] *= 2;
+		$equipment["Résistance Neutre"] *= 2;
+		$equipment["Résistance Terre"] *= 2;
+		$equipment["Résistance Feu"] *= 2;
+		$equipment["Résistance Eau"] *= 2;
+		$equipment["Résistance Air"] *= 2;
+		$equipment["Résistance Critiques"] *= 2;
+		$equipment["Résistance Poussée"] *= 2;
+		$equipment["% Résistance Neutre"] *= 4;
+		$equipment["% Résistance Terre"] *= 4;
+		$equipment["% Résistance Feu"] *= 4;
+		$equipment["% Résistance Eau"] *= 4;
+		$equipment["% Résistance Air"] *= 4;
+		$equipment["Initiative"] *= 0.5;
+		return ($equipment);
+	}
 }
  ?>
