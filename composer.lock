@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e8a4d4e9abfa243fdbd23a259a78851b",
+    "content-hash": "38090383bc5df6edb17eee9a849e38d0",
     "packages": [
         {
             "name": "pdeans/http",
@@ -181,6 +181,8 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^5.4 || ^7.0"
+    },
     "platform-dev": []
 }

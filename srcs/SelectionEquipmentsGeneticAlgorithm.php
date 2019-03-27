@@ -18,7 +18,7 @@ class SelectionEquipmentsGeneticAlgorithm implements \DofusGenetic\Interfaces\IG
 	private $weight = [
 		"Vitalité" => 0.10,
 		"PA" => 0.17,
-		"PM" => 0.12,
+		"PM" => 0.17,
 		"Initiative" => 0.01,
 		"Prospection" => 0.01,
 		"PO" => 0.12,
@@ -29,7 +29,7 @@ class SelectionEquipmentsGeneticAlgorithm implements \DofusGenetic\Interfaces\IG
 		"Chance" => 0.01,
 		"Agilité" => 0.01,
 		"Soins" => 0.01,
-		"Dommages" => 0.15,
+		"Dommages" => 0.20,
 		"Puissance" => 0.15,
 		"Dommages Critiques" => 0.01,
 		"Dommages Neutre" => 0.01,
@@ -86,6 +86,23 @@ class SelectionEquipmentsGeneticAlgorithm implements \DofusGenetic\Interfaces\IG
 		return ($this);
 	}
 
+	public function getTopItems($categorie, $offset) : array
+	{
+		$top_items = [];
+		foreach ($this->items as $key => $categories)
+		{
+			foreach ($categories as $id => $item)
+			{
+				$item = \DofusGenetic\Helpers\ItemHelper::getStats($item);
+				$this->items[$key][$id]['weight'] = $this->fitness_function($item);
+			}
+			usort($this->items[$key], "static::sort_by_weight");
+		}
+		for ($i = 0; $i < $offset; $i++)
+			$top_items[] = $this->items[$categorie][$i];
+		return ($top_items);
+	}
+
 	public function start()
 	{
 		// Population test
@@ -107,7 +124,6 @@ class SelectionEquipmentsGeneticAlgorithm implements \DofusGenetic\Interfaces\IG
 	public function fitness_function($item)
 	{
 		$fitness = 0.00;
-
 		// Need to store this into a json file.
 		$item = \DofusGenetic\Helpers\ItemHelper::normalizeItem($item);
 		if (($sum = array_sum($item)) <= 0)

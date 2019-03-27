@@ -14,26 +14,24 @@ class App
         CURLOPT_SSL_VERIFYPEER => 0,
         CURLOPT_SSL_VERIFYHOST => 0,
     ]);
-
     // Get all equipments.
-    // $response = $client->get('https://dofapitouch.herokuapp.com/equipments?filter[offset]=0&filter[limit]=2235&filter[skip]=0');
-	$response = $client->get("https://dofapi2.herokuapp.com/equipments?filter[offset]=0&filter[limit]=2912&filter[skip]=0");
+    $response = $client->get('https://dofapitouch.herokuapp.com/equipments?filter[offset]=0&filter[limit]=2235&filter[skip]=0');
+	// $response = $client->get("https://dofapi2.herokuapp.com/equipments?filter[offset]=0&filter[limit]=2912&filter[skip]=0");
     $items = json_decode($response->getBody(), TRUE);
     $equipments = [];
-
     // Sorted equipments on sub-arrays based on categorys.
     foreach (self::ITEMS_CATEGORIES as $type_name)
     {
       $equipments[$type_name] = array_filter($items, function ($item) use ($type_name)
       {
-          return ($item['lvl'] <= 12 && $item['lvl'] >= 1 &&
+          return ($item['lvl'] <= 60 && $item['lvl'] >= 25 &&
               $item['type'] === $type_name);
         });
     }
 	// How to use.
     $algorithm = new SelectionEquipmentsGeneticAlgorithm($equipments);
-	$algorithm->setWeight(['Agilité' => 0.33, 'Sagesse' => 0.99]);
-    $algorithm->setForbiddenEquipment([967, 968, 958]);
+	$algorithm->setWeight(['PA' => 0.50, 'PM' => 0.50, 'Force' => 0.85, 'Vitalité' => 0.20,'Sagesse' => 0.3, "Agilité" => 0.10, "Puissance" => 0.25]);
+    $algorithm->setForbiddenEquipment([967, 968, 958, 11364, 12238, 12237, 10852]);
     $best_character = $algorithm->start()[0];
 	// Example app.
 	$total_stats = [];
@@ -51,6 +49,14 @@ class App
 	echo "</br>";
 	foreach ($total_stats as $key => $value)
 		echo $key . ": " . $value . "</br>";
+	echo "<h3>Top items for each slots:</h3>";
+	foreach (self::ITEMS_CATEGORIES as $tmp)
+	{
+		$top_items = $algorithm->getTopItems($tmp, 10);
+		for ($i = 0; $i < 10; $i++)
+			echo $top_items[$i]['name'] . ' - ';
+		echo "<br />";
+	}
 	echo "</pre>";
   }
 }
