@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": "^5.4 || ^7.0",
-        "pdeans/http": "^1.1"
+        "pdeans/http": "dev-master"
     },
     "autoload": {
   		"psr-4": {
