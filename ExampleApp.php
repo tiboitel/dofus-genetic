@@ -13,8 +13,8 @@ class ExampleApp
         CURLOPT_SSL_VERIFYHOST => 0,
     ]);
     // Get all equipments.
-    $response = $client->get('https://dofapitouch.herokuapp.com/equipments?filter[offset]=0&filter[limit]=2235&filter[skip]=0');
-	// $response = $client->get("https://dofapi2.herokuapp.com/equipments?filter[offset]=0&filter[limit]=2912&filter[skip]=0");
+    //$response = $client->get('https://dofapitouch.herokuapp.com/equipments?filter[offset]=0&filter[limit]=2235&filter[skip]=0');
+	$response = $client->get("https://fr.dofus.dofapi.fr/equipments");
     $items = json_decode($response->getBody(), TRUE);
     $equipments = [];
     // Sorted equipments on sub-arrays based on categorys.
@@ -22,13 +22,13 @@ class ExampleApp
     {
       $equipments[$type_name] = array_filter($items, function ($item) use ($type_name)
       {
-          return ($item['lvl'] <= 60 && $item['lvl'] >= 25 &&
+          return ($item['level'] <= 130 && $item['level'] >= 60 &&
               $item['type'] === $type_name);
         });
     }
 	// How to use.
     $algorithm = new \DofusGenetic\SelectionEquipmentsGeneticAlgorithm($equipments);
-	$algorithm->setWeight(['PA' => 0.50, 'PM' => 0.50, 'Force' => 0.85, 'Vitalité' => 0.20,'Sagesse' => 0.3, "Agilité" => 0.10, "Puissance" => 0.25]);
+	$algorithm->setWeight(['PA' => 0.47, 'PM' => 0.15, 'Sagesse' => 0.10, "Agilité" => 0.99, "Portée" => 0.35, "Dommages Air" => 0.15, "Puissance" => 0.15]);
     $algorithm->setForbiddenEquipment([967, 968, 958, 11364, 12238, 12237, 10852]);
     $best_character = $algorithm->start()[0];
 	// Example app.

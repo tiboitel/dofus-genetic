@@ -21,7 +21,7 @@ class SelectionEquipmentsGeneticAlgorithm implements \DofusGenetic\Interfaces\IG
 		"PM" => 0.17,
 		"Initiative" => 0.01,
 		"Prospection" => 0.01,
-		"PO" => 0.12,
+		"Portée" => 0.12,
 		"Invocations" => 0.01,
 		"Sagesse" => 0.01,
 		"Force" => 0.01,
@@ -127,9 +127,9 @@ class SelectionEquipmentsGeneticAlgorithm implements \DofusGenetic\Interfaces\IG
 		// Need to store this into a json file.
 		$item = \DofusGenetic\Helpers\ItemHelper::normalizeItem($item);
 		if (($sum = array_sum($item)) <= 0)
-		return (0);
+			return (0);
 		foreach ($item as $key => $stat)
-		$fitness += ($stat > 0) ? ($stat * $this->weight[$key]) : ($stat / $this->weight[$key]);
+			$fitness += ($stat > 0) ? ($stat * $this->weight[$key]) : ($stat / $this->weight[$key]);
 		return ($fitness);
 	}
 
@@ -169,7 +169,7 @@ class SelectionEquipmentsGeneticAlgorithm implements \DofusGenetic\Interfaces\IG
 		// Get n indivual with the better fitness (elite) and adding it
 		// to the next population.
 		for ($i = 0; $i < self::MAX_ELITE_CLONES; $i++)
-		$this->population[] = $fitness_array[$i]['individual'];
+			$this->population[] = $fitness_array[$i]['individual'];
 		shuffle($this->population);
 	}
 

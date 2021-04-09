@@ -11,7 +11,7 @@ class ItemHelper
 		"PM",
 		"Initiative",
 		"Prospection",
-		"PO",
+		"Portée",
 		"Invocations",
 		"Sagesse",
 		"Force",
@@ -51,11 +51,16 @@ class ItemHelper
 		foreach (self::STATS_NAME as $stat_name)
 		{
 			$tmp[$stat_name] = 0;
-			foreach ($equipment['stats'] as $stat)
+			if (array_key_exists('statistics', $equipment))
 			{
-				if (array_key_exists($stat_name, $stat))
-					$tmp[$stat_name] = (array_key_exists("to", $stat[$stat_name])) ?
-							$stat[$stat_name]["to"] : $stat[$stat_name]["from"];
+				foreach ($equipment['statistics'] as $stat)
+				{
+					if (array_key_exists($stat_name, $stat))
+						$tmp[$stat_name] = (array_key_exists("max", $stat[$stat_name])) ?
+								$stat[$stat_name]["min"] : $stat[$stat_name]["min"];
+					if ($tmp[$stat_name] === "null")
+						$stat_name = $stat[$stat_name]["min"];
+				}
 			}
 		}
 		return ($tmp);
@@ -65,7 +70,7 @@ class ItemHelper
 	{
 		$equipment['PA'] *= 85;
 		$equipment['PM'] *= 75;
-		$equipment['PO'] *= 41;
+		$equipment['Portée'] *= 41;
 		$equipment['Sagesse'] *= 3;
 		$equipment ['Dommages'] *= 20;
 		$equipment['Prospection'] *= 3;
